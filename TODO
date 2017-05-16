@@ -1,0 +1,48 @@
+What's next?
+
+ * first interesting example map (port from WadC?)
+    * fleshing out thing types, texture functions, etc.
+ * handling randomness
+    *  possibly the others too, not terribly interesting as demo maps!
+ * Tidy up Line tests, add more, remove stupid ones
+ * more quickcheck properties?
+ * rename to Liquorice?
+ * is there (or define) an inverse composition operator so we can avoid
+   explicit lambda in HoFs like quad, pushpop etc.; or, would that be
+   overall too confusing
+
+ * generation order, rework Render.hs tests to reflect (final?) ordering
+
+        let's try always prepending in Context, and doing the same
+        in the walk to WadMap, inverting the order.
+
+            oh god this is not fun
+
+ * generic haskell / derived Binary instances for Wad?
+
+demo maps / main key points over wadc?
+
+    random dungeon generator with avoiding clashing. via a blockmap? (possible
+    in wadc although ugly). or via querying the existing structures
+
+    modifying existing structures. line warping/bending?
+
+    "overdraw" in some way.
+
+* thought: arguments to box/ibox are unclear since they're all ints
+  if the x,y was a tuple, it would be less ambiguous
+
+------------------------------------------------------------------------------
+birds todo:
+
+second cyber?
+textures:
+    liberally sprinkle indoors outdoors around the place
+    inside all marble (inc floor), cutouts for white stones
+much wider cutouts
+alignment: new nice buttons (use edged ibox?)
+fancy play/return for symmetric shapes (courtyard, and spokes)
+skybox
+remove gallows
+    put them back in as post-draw cut thing?
+"with_sectortype / with_linetype"?
