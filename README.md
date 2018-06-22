@@ -10,6 +10,9 @@ A *Liquorice* program is a series of instructions to move a virtual "turtle" or
 "pen".  The state of the pen, and the structures it has drawn, are captured in
 a *Context*.
 
+*Liquorice* is distributed under the terms of the GNU Public License, version
+3 (see [COPYING](COPYING))
+
 ## Quick example
 
     -- simple example, triangle (for orientation); unique texture per line
