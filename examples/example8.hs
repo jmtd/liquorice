@@ -3,7 +3,7 @@
 module Main where
 
 import Liquorice.Monad
-import Render
+import Liquorice.Render
 
 main = buildWad "example8.wad" $ runWadL $ do
     place 64 64 thing

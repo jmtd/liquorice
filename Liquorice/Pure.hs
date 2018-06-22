@@ -39,7 +39,7 @@ import Data.Function ((&))
 import Data.List (nub)
 
 import Liquorice
-import Line
+import Liquorice.Line
 
 main = htfMain htf_thisModulesTests
 

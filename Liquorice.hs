@@ -23,7 +23,7 @@ import Test.Framework
 import Data.Function ((&))
 import Data.List (nub)
 
-import Line
+import Liquorice.Line
 
 next :: (Eq a, Bounded a, Enum a) => a -> a
 next a = if a == maxBound then minBound else succ a

@@ -1,8 +1,8 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 
-module Render ( buildWad
-              , htf_thisModulesTests
-              ) where
+module Liquorice.Render ( buildWad
+                        , htf_thisModulesTests
+                        ) where
 
 import qualified Data.ByteString.Lazy as L
 import Test.Framework
@@ -11,8 +11,8 @@ import Data.Function ((&))
 
 import Liquorice
 import Liquorice.Pure
-import Line
-import Wad hiding (wad9, main)
+import Liquorice.Line
+import Doom.Wad
 
 -- utility stuff -------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 -- simple example, triangle (for orientation); unique texture per line
 import Liquorice.Monad
-import Render
+import Liquorice.Render
 
 main = buildWad "example1.wad" $ runWadL $ do
     mid "ZZWOLF1"

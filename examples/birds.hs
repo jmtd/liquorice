@@ -2,11 +2,12 @@
     A Liquorice conversion of WadC's "birds.wl" - adjusted to Doom E2M8
     Requires a limit-removing port
  -}
-import Liquorice
-import Liquorice.Monad
-import Render
 import Control.Monad.State.Lazy
 import Data.Tuple (swap)
+
+import Liquorice
+import Liquorice.Monad
+import Liquorice.Render
 
 -- stuff to move elsewhere ---------------------------------------------------
 

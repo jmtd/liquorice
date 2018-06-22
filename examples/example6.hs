@@ -2,7 +2,7 @@
 module Main where
 
 import Liquorice.Monad
-import Render
+import Liquorice.Render
 
 main = buildWad "example6.wad" $ runWadL $ do
     box 256 256 0 128 160

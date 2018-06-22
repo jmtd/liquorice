@@ -1,14 +1,14 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 
-module Line( Line(..)
-           , Point
-           , flipline
-           , splitLine
-           , checkIntersect
-           , splitLines
-           , workbest
-           , htf_thisModulesTests
-           ) where
+module Liquorice.Line( Line(..)
+                     , Point
+                     , flipline
+                     , splitLine
+                     , checkIntersect
+                     , splitLines
+                     , workbest
+                     , htf_thisModulesTests
+                     ) where
 
 import Data.List
 import Test.Framework

@@ -1,16 +1,16 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 
-module Wad ( WadLump(..)
-           , wadLumpLength
-           , wadLumpName
-           , Linedef(..)
-           , Sidedef(..)
-           , WadMap(..)
-           , mapWad2Wad
-           , dumpWad
+module Doom.Wad ( WadLump(..)
+                , wadLumpLength
+                , wadLumpName
+                , Linedef(..)
+                , Sidedef(..)
+                , WadMap(..)
+                , mapWad2Wad
+                , dumpWad
 
-           , htf_thisModulesTests
-           ) where
+                , htf_thisModulesTests
+                ) where
 
 import qualified Data.ByteString.Lazy as L
 import qualified Data.ByteString.Lazy.Char8 as LC

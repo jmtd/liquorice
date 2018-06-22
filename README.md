@@ -17,7 +17,7 @@ a `Context`.
 
     -- simple example, triangle (for orientation); unique texture per line
     import Liquorice.Monad
-    import Render
+    import Liquorice.Render
 
     main = buildWad "example1.wad" $ runWadL $ do
         mid "ZZWOLF1"
@@ -106,8 +106,8 @@ as modules to your Liquorice program:
 These are back-end implementation details:
 
  * `Liquorice/Pure.hs` — most of the "standard library", in pure functions
- * `Line.hs` — `Line` type, line splitting and tests
- * `Wad.hs` — Wad and WadMap definitions and binary serialisation
+ * `Liquorice/Line.hs` — `Line` type, line splitting and tests
+ * `Doom/Wad.hs` — Wad and WadMap definitions and binary serialisation
  * `TestMain.hs` — HTF test harness
 
 ## See also
