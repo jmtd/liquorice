@@ -8,7 +8,7 @@ a debt to LOGO.
 
 A *Liquorice* program is a series of instructions to move a virtual "turtle" or
 "pen".  The state of the pen, and the structures it has drawn, are captured in
-a *Context*.
+a `Context`.
 
 *Liquorice* is distributed under the terms of the GNU Public License, version
 3 (see [COPYING](COPYING))
@@ -37,7 +37,7 @@ a *Context*.
 The commands that a typical *Liquorice* program will use are predominantly
 monadic, and so make use of Haskell's "do-notation" for ordering. Internally,
 the majority of these monadic functions are wrappers around pure equivalents
-which transform an input *Context* type into an output, e.g.:
+which transform an input `Context` type into an output, e.g.:
 
     xoff :: Int -> Context -> Context
     xoff x c = c { paletteXoff = x }
@@ -65,9 +65,6 @@ structure `WadMap`, which closely resembles the binary structure of a PWAD.
 (`WadMap` itself is a specialisation of `Wad`, imposing the presence of map
  specific lumps)
 
-The majority of *Liquorice* functions are pure functions that
-transform an input *Context* into an output, e.g.
-
 ## More detailed example
 
 See [birds.hs](birds.hs), A re-implementation/transformation of ["Bird Cage"
@@ -75,6 +72,8 @@ for WadC](https://redmars.org/wadc/examples/#_birds_wl) for an example program
 that generates a complete playable map. The map targets Doom 1 / The
 Ultimate Doom (map slot E2M8), and requires a doom engine with raised
 engine limits (but no other special features)
+
+The generated PWAD, with nodes, ready to play: [birds.zip](https://redmars.org/liquorice/birds.zip)
 
 ## Pros/Cons
 
