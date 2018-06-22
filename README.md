@@ -1,17 +1,18 @@
 # Liquorice
 
 *Liquorice* is a Haskell embedded domain-specific language (eDSL) for the
-algorithmic construction of maps for the computer game "Doom", created by
-[Jonathan Dowland](https://jmtd.net/). The design of *Liquorice* is heavily
+algorithmic construction of maps for the computer game "Doom".
+The design of *Liquorice* is heavily
 influenced by [Wad Language (WadC)](https://jmtd.net/wadc/), which in turn owes
-a debt to LOGO.
+a debt to [LOGO](http://el.media.mit.edu/logo-foundation/what_is_logo/logo_programming.html).
 
 A *Liquorice* program is a series of instructions to move a virtual "turtle" or
 "pen".  The state of the pen, and the structures it has drawn, are captured in
 a `Context`.
 
-*Liquorice* is distributed under the terms of the GNU Public License, version
-3 (see [COPYING](COPYING))
+*Liquorice* was created by [Jonathan Dowland](https://jmtd.net/) and is
+distributed under the terms of the GNU Public License, version 3 (see
+[COPYING](COPYING)).
 
 ## Quick example
 

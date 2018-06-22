@@ -1,8 +1,0 @@
-digraph{
-    THINGS;
-    LINEDEFS -> VERTEXES;
-    LINEDEFS -> SIDEDEFS;
-    SIDEDEFS -> SECTORS;
-    VERTEXES;
-    SECTORS;
-}

@@ -1,12 +1,9 @@
 What's next?
 
- * first interesting example map (port from WadC?)
-    * fleshing out thing types, texture functions, etc.
  * handling randomness
     *  possibly the others too, not terribly interesting as demo maps!
  * Tidy up Line tests, add more, remove stupid ones
  * more quickcheck properties?
- * rename to Liquorice?
  * is there (or define) an inverse composition operator so we can avoid
    explicit lambda in HoFs like quad, pushpop etc.; or, would that be
    overall too confusing
@@ -35,14 +32,5 @@ demo maps / main key points over wadc?
 ------------------------------------------------------------------------------
 birds todo:
 
-second cyber?
-textures:
-    liberally sprinkle indoors outdoors around the place
-    inside all marble (inc floor), cutouts for white stones
-much wider cutouts
-alignment: new nice buttons (use edged ibox?)
-fancy play/return for symmetric shapes (courtyard, and spokes)
 skybox
-remove gallows
-    put them back in as post-draw cut thing?
 "with_sectortype / with_linetype"?
