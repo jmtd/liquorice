@@ -330,7 +330,6 @@ courtyard outertag innertag walktag triggertype outer_button_tag outer_button_ty
   -- new demon cubes
   setLoc loc
   place 64 64 demoncube
-  popsector
 
   setLoc loc
   outdoors
@@ -388,9 +387,54 @@ starts = do
     player4start
     thing
 
--- simplified from a more complex example (that exposes some linesplit bugs)
+-- a 128 cube, with a 45° 128 cube on top
 demoncube = do
-    lower "MARBFAC2"
-    upper "MARBFAC3"
+    floorflat "DEM1_5"
     ceil "DEM1_5"
-    ibox 128 128 128 128 skybright
+    lower "MARBFACE"
+    upper "MARBFACE"
+    step 32 0
+    quad (xoff 32 >> straight 64 >> xoff 45 >> draw 32 32 >> xoff 0 >> turnright)
+    rightsector 128 128 skybright
+
+    -- diagonals: 
+    floorflat "MFLR8_4"
+    quad $ do
+        step 64 0
+        draw (-64) 0
+        innerrightsector 0 128 skybright
+        draw 32 (-32)
+        draw 32 32
+        extendsector
+
+        step 32 32
+        turnright
+
+    floorflat "DEM1_5"
+    ceil "F_SKY1"
+    quad $ do
+        step 64 0
+        xoff 45
+        step 32 32
+        xoff 0
+        draw (-32) (-32)
+        innerrightsector 128 256 skybright
+        draw 32 0
+        draw 0 32
+        extendsector
+        turnright
+
+    twice $ quad $ popsector
+    popsector
+
+    quad $ do
+        xoff 32
+        straight (-32)
+        xoff 0
+        draw 0 32
+        xoff 90
+        draw (-32) 32
+        xoff 0
+        draw 32 32
+        turnleft
+    extendsector
