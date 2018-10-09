@@ -68,11 +68,11 @@ structure `WadMap`, which closely resembles the binary structure of a PWAD.
 
 ## More detailed example
 
-See [birds.hs](birds.hs), A re-implementation/transformation of ["Bird Cage"
-for WadC](https://redmars.org/wadc/examples/#_birds_wl) for an example program
-that generates a complete playable map. The map targets Doom 1 / The
-Ultimate Doom (map slot E2M8), and requires a doom engine with raised
-engine limits (but no other special features)
+See [birds.hs](examples/birds.hs), A re-implementation/transformation of ["Bird
+Cage" for WadC](https://redmars.org/wadc/examples/#_birds_wl) for an example
+program that generates a complete playable map. The map targets Doom 1 / The
+Ultimate Doom (map slot E2M8), and requires a doom engine with raised engine
+limits (but no other special features)
 
 The generated PWAD, with nodes, ready to play: [birds.zip](https://redmars.org/liquorice/birds.zip)
 
