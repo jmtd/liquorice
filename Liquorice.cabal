@@ -13,12 +13,21 @@ maintainer:          jon@dow.land
 -- copyright:
 category:            Game
 build-type:          Simple
-extra-source-files:  ChangeLog.md
 cabal-version:       >=1.10
 
 test-suite test-hwadc
   hs-source-dirs:      .
   type:                exitcode-stdio-1.0
   Main-is:             TestMain.hs
-  build-depends:       base >=4.9 && <4.10, HTF, binary, bytestring, mtl
+  build-depends:       base >=4.9,
+                       binary,
+                       bytestring,
+                       HTF,
+                       mtl
   Default-language:    Haskell98
+  other-modules:       Doom.Wad,
+                       Liquorice,
+                       Liquorice.Line,
+                       Liquorice.Monad,
+                       Liquorice.Pure,
+                       Liquorice.Render

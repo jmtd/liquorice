@@ -114,7 +114,8 @@ test_nosplit = assertEqual [l11] (splitLine l11 l12)
 
 instance Arbitrary Line where
     arbitrary = do
-        [x,y] <- replicateM 2 (choose (-2500, 2500))
+        vs <- replicateM 2 (choose (-2500, 2500))
+        let [x,y] = vs
         return (mktestLine (x,0) (y,0))
 
 prop_splitline_sameorient :: Line -> Line -> Bool
