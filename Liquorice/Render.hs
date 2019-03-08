@@ -86,7 +86,7 @@ buildWad outfile wadcsrc =
 
 -- test 1: single triangular sector, unique texture per line
 wad1 = WadMap { mapLabel    = "MAP01"
-              , mapThings   = [Thing (32, 64) 90 1 0]
+              , mapThings   = [Thing (32, 64) 90 1 7]
               , mapLinedefs = [ Linedef 0 1 1 0 0 0 (-1)
                               , Linedef 1 2 1 0 0 1 (-1)
                               , Linedef 2 0 1 0 0 2 (-1)
@@ -153,20 +153,20 @@ example4 = start
     & box 128 128 0 128 160
 
 wad4 = WadMap { mapLabel    = "MAP01"
-              , mapThings   = [Thing (64, 64) 90 1 0]
-              , mapLinedefs = [ Linedef 0 1 4 0 0 2 3
-                              , Linedef 2 0 1 0 0 0 (-1)
-                              , Linedef 3 2 1 0 0 0 (-1)
-                              , Linedef 1 3 1 0 0 0 (-1)
-                              , Linedef 4 5 1 0 0 1 (-1)
-                              , Linedef 0 4 1 0 0 1 (-1)
-                              , Linedef 5 1 1 0 0 1 (-1) ]
+              , mapThings   = [Thing (64, 64) 90 1 7]
+              , mapLinedefs = [ Linedef 0 1 1 0 0 0 (-1)
+                              , Linedef 1 2 1 0 0 0 (-1)
+                              , Linedef 2 3 1 0 0 0 (-1)
+                              , Linedef 3 0 4 0 0 2 3
+                              , Linedef 4 0 1 0 0 1 (-1)
+                              , Linedef 3 5 1 0 0 1 (-1)
+                              , Linedef 5 4 1 0 0 1 (-1) ]
               , mapSidedefs = [ Sidedef 0 0 "STARTAN3" "STARTAN3" "STARTAN3" 0
                               , Sidedef 0 0 "STARTAN3" "STARTAN3" "STARTAN3" 1
                               , Sidedef 0 0 "STARTAN3" "STARTAN3" "-" 0
                               , Sidedef 0 0 "STARTAN3" "STARTAN3" "-" 1 ]
-              , mapVertexes = [(128, 128), (0, 128), (128, 256), (0, 256),
-                               (128, 0), (0, 0)]
+              , mapVertexes = [(0,128),(0,256),(128,256),(128,128),(0,0),(128,0)]
+
               , mapSectors  = [ Sector 0 128 "FLAT23" "F_SKY1" 160 0 0 []
                               , Sector 0 128 "FLAT23" "F_SKY1" 160 0 0 [] ]
               }
