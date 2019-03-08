@@ -48,6 +48,7 @@ Examples of powerful open source engines include [Crispy Doom](https://www.choco
 
 ### For Haskell novices
 
+…
 
 ## Evaluation
 
