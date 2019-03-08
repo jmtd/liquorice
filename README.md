@@ -1,18 +1,8 @@
 # Liquorice
 
-*Liquorice* is a Haskell embedded domain-specific language (eDSL) for the
-algorithmic construction of maps for the computer game "Doom".
-The design of *Liquorice* is heavily
-influenced by [Wad Language (WadC)](https://jmtd.net/wadc/), which in turn owes
-a debt to [LOGO](http://el.media.mit.edu/logo-foundation/what_is_logo/logo_programming.html).
+*Liquorice* is a system for constructing maps for the [computer game Doom](https://doomwiki.org/wiki/Doom) by writing algorithms to describe the geometry. A *Liquorice* program is a series of instructions to move a virtual "turtle" or "pen", which define the walls, floors, rooms and monsters as it goes.
 
-A *Liquorice* program is a series of instructions to move a virtual "turtle" or
-"pen".  The state of the pen, and the structures it has drawn, are captured in
-a `Context`.
-
-*Liquorice* was created by [Jonathan Dowland](https://jmtd.net/) and is
-distributed under the terms of the GNU Public License, version 3 (see
-[COPYING](COPYING)).
+More specifically, *Liquorice* is an embedded domain-specific language (eDSL) within the pure functional programming language [Haskell](https://www.haskell.org/).
 
 ## Quick example
 
@@ -32,6 +22,30 @@ distributed under the terms of the GNU Public License, version 3 (see
         turnaround
         step 64 32
         thing
+
+## More detailed example
+
+See [birds.hs](birds.hs), for an example program
+that generates a complete playable map. The map targets Doom 1 / The
+Ultimate Doom (map slot E2M8), and requires a doom engine with raised
+engine limits, such as [Crispy Doom](https://www.chocolate-doom.org/wiki/Crispy_Doom).
+
+The generated PWAD, with nodes, ready to play: [birds.zip](https://redmars.org/liquorice/birds.zip)
+
+*birds.hs* is a re-implementation/transformation of ["Bird Cage"
+for WadC](https://redmars.org/wadc/examples/#_birds_wl).
+
+## Getting Started
+
+### For Doom novices
+
+Doom's engine source code was open-sourced in 1996, but you need a copy of
+the game's data files to use them. You can buy [The Ultimate Doom](https://www.gog.com/game/the_ultimate_doom) and [Doom II](https://www.gog.com/game/doom_ii_final_doom) at [Gog](http://www.gog.com/), amongst other places. Failing that, you could try [FreeDoom](https://freedoom.github.io/), a free-content game for Doom engines.
+
+Examples of powerful open source engines include [Crispy Doom](https://www.chocolate-doom.org/wiki/index.php/Crispy_Doom), [Eternity Engine](http://eternity.youfailit.net/wiki/Main_Page) and [GZDoom](https://zdoom.org/index).
+
+### For Haskell novices
+
 
 ## Evaluation
 
@@ -66,15 +80,6 @@ structure `WadMap`, which closely resembles the binary structure of a PWAD.
 (`WadMap` itself is a specialisation of `Wad`, imposing the presence of map
  specific lumps)
 
-## More detailed example
-
-See [birds.hs](examples/birds.hs), A re-implementation/transformation of ["Bird
-Cage" for WadC](https://redmars.org/wadc/examples/#_birds_wl) for an example
-program that generates a complete playable map. The map targets Doom 1 / The
-Ultimate Doom (map slot E2M8), and requires a doom engine with raised engine
-limits (but no other special features)
-
-The generated PWAD, with nodes, ready to play: [birds.zip](https://redmars.org/liquorice/birds.zip)
 
 ## Pros/Cons
 
@@ -110,6 +115,16 @@ These are back-end implementation details:
  * `Liquorice/Line.hs` — `Line` type, line splitting and tests
  * `Doom/Wad.hs` — Wad and WadMap definitions and binary serialisation
  * `TestMain.hs` — HTF test harness
+
+## Author
+
+*Liquorice* was created by [Jonathan Dowland](https://jmtd.net/) and is
+distributed under the terms of the GNU Public License, version 3 (see
+[COPYING](COPYING)).
+
+The design of *Liquorice* is heavily
+influenced by [Wad Language (WadC)](https://jmtd.net/wadc/), which in turn owes
+a debt to [LOGO](http://el.media.mit.edu/logo-foundation/what_is_logo/logo_programming.html).
 
 ## See also
 
