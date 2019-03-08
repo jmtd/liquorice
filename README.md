@@ -1,5 +1,7 @@
 # Liquorice
 
+![](logo.png "Liquorice Logo")
+
 *Liquorice* is a system for constructing maps for the [computer game Doom](https://doomwiki.org/wiki/Doom) by writing algorithms to describe the geometry. A *Liquorice* program is a series of instructions to move a virtual "turtle" or "pen", which define the walls, floors, rooms and monsters as it goes.
 
 More specifically, *Liquorice* is an embedded domain-specific language (eDSL) within the pure functional programming language [Haskell](https://www.haskell.org/).
