@@ -202,3 +202,14 @@ addLine l c = let
                  then workbest [l] intersects
                  else [l]
     in c { sectors = news, linedefs = linedefs c ++ newlines }
+
+-- XXX rename!
+--          lines     cuts      lines
+workbest :: [Line] -> [Line] -> [Line]
+workbest [] _ = []
+workbest ls [] = ls
+workbest (l:ls) (c:cs) =
+    let x = splitLine l  c
+        y = workbest  x  cs
+        z = workbest  ls (c:cs)
+    in  y ++ z

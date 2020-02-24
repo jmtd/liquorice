@@ -6,7 +6,7 @@ module Liquorice.Line( Line(..)
                      , splitLine
                      , checkIntersect
                      , splitLines
-                     , workbest
+
                      , htf_thisModulesTests
                      ) where
 
@@ -157,14 +157,3 @@ l14 = mktestLine (0,0)   (128,0)
 l15 = mktestLine (256,0) (384,0)
 l16 = mktestLine (-256,0) (512,0)
 -- XXX need a test here (import example9)
-
--- XXX rename!
---          lines     cuts      lines
-workbest :: [Line] -> [Line] -> [Line]
-workbest [] _ = []
-workbest ls [] = ls
-workbest (l:ls) (c:cs) =
-    let x = splitLine l  c
-        y = workbest  x  cs
-        z = workbest  ls (c:cs)
-    in  y ++ z
