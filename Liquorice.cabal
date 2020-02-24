@@ -5,11 +5,11 @@ name:                Liquorice
 version:             0.0.1
 synopsis:            Algorithmic Doom map generation
 description:         .
-homepage:            https://jmtd.net/
+homepage:            https://jmtd.net/doom/liquorice/
 license:             GPL-3
-license-file:        LICENSE
+license-file:        COPYING
 author:              Jonathan Dowland
-maintainer:          jon@dow.land
+maintainer:          jon+hackage@dow.land
 -- copyright:
 category:            Game
 build-type:          Simple
@@ -31,3 +31,17 @@ test-suite test-hwadc
                        Liquorice.Monad,
                        Liquorice.Pure,
                        Liquorice.Render
+library
+  exposed-modules:     Doom.Wad,
+                       Liquorice,
+                       Liquorice.Line,
+                       Liquorice.Monad,
+                       Liquorice.Pure,
+                       Liquorice.Render
+  build-depends:       base >=4.9,
+                       binary,
+                       bytestring,
+                       HTF,
+                       mtl
+  Default-language:    Haskell98
+  hs-source-dirs:      .

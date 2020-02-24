@@ -4,9 +4,6 @@ What's next?
     *  possibly the others too, not terribly interesting as demo maps!
  * Tidy up Line tests, add more, remove stupid ones
  * more quickcheck properties?
- * is there (or define) an inverse composition operator so we can avoid
-   explicit lambda in HoFs like quad, pushpop etc.; or, would that be
-   overall too confusing
 
  * generation order, rework Render.hs tests to reflect (final?) ordering
 
@@ -28,6 +25,9 @@ demo maps / main key points over wadc?
 
 * thought: arguments to box/ibox are unclear since they're all ints
   if the x,y was a tuple, it would be less ambiguous
+
+* Doom/* should probably not depend upon stuff in Liquorice. Move common
+  definitions (abstract Linedef etc. types) into Doom/*.
 
 ------------------------------------------------------------------------------
 birds todo:
