@@ -30,6 +30,7 @@ module Liquorice.Pure
     , ibox
     , pushpop
     , place
+    , addLine
 
     , htf_thisModulesTests
     ) where
@@ -190,3 +191,14 @@ ibox :: Int -> Int -> Int -> Int -> Int -> Context -> Context
 ibox h w f ceil l c = c
      & box' h w
      & innerrightsector f ceil l
+
+-- check intersections against all existing lines
+addLine :: Line -> Context -> Context
+addLine l c = let
+    news       = map (\s-> s { sectorLines = splitLines (sectorLines s) l }) (sectors c)
+    alllines   = linedefs c ++ concatMap sectorLines news
+    intersects = filter (checkIntersect l) alllines
+    newlines   = if length intersects > 0
+                 then workbest [l] intersects
+                 else [l]
+    in c { sectors = news, linedefs = linedefs c ++ newlines }

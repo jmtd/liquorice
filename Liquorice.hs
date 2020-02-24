@@ -14,7 +14,6 @@ module Liquorice
     , Sector(..)
 
     , start
-    , addLine
 
     , htf_thisModulesTests
     ) where
@@ -93,21 +92,3 @@ start = Context { location=(0,0)
                 , paletteXoff=0
                 , paletteYoff=0
                 }
-
--- check intersections against all existing lines
-addLine :: Line -> Context -> Context
-addLine l c = let
-    news       = map (\s-> s { sectorLines = splitLines (sectorLines s) l }) (sectors c)
-    alllines   = linedefs c ++ concatMap sectorLines news
-    intersects = filter (checkIntersect l) alllines
-    newlines   = if length intersects > 0
-                 then workbest [l] intersects
-                 else [l]
-    in c { sectors = news, linedefs = linedefs c ++ newlines }
-
-test_example9 = let pre  = addLine (Line (0,0) (0,128) "" "" "" 0 0 0 0) start
-                    post = addLine (Line (0,64) (0,192) "" "" "" 0 0 0 0) pre
-                in  assertEqual 3 (length (linedefs post))
-
-
-main = htfMain htf_thisModulesTests
