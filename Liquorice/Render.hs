@@ -1,4 +1,19 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
+{-# OPTIONS_HADDOCK prune #-}
+
+{-|
+Module      : Liquorice.Render
+Description : High-level functions for rendering Liquorice programs to PWAD files.
+Copyright   : © Jonathan Dowland, 2020
+License     : GPL-3
+Maintainer  : jon+hackage@dow.land
+Stability   : experimental
+Portability : POSIX
+
+This module exposes a high-level function `buildWad` that can be used to evaluate
+a Liquorice program, convert the resulting Context into Doom data structures and
+write out a Doom-format PWAD file.
+-}
 
 module Liquorice.Render ( buildWad
                         , htf_thisModulesTests
@@ -79,6 +94,8 @@ line2Def l secno m = let
             newlines  = before ++ newline:ls
             in m { mapVertexes = vs2, mapSidedefs = sd2, mapLinedefs = newlines }
 
+-- | Convert the geometry described by the supplied Context into Doom-format
+-- structures and write them out as a PWAD file to the supplied FilePath.
 buildWad outfile wadcsrc =
     L.writeFile outfile $ (dumpWad . mapWad2Wad . convertWadL) wadcsrc
 

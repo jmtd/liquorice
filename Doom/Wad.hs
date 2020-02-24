@@ -1,5 +1,19 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
+{-# OPTIONS_HADDOCK prune #-}
 
+{-|
+Module      : Doom.Wad
+Description : Data types modelling Doom internal data structures
+Copyright   : © Jonathan Dowland, 2020
+License     : GPL-3
+Maintainer  : jon+hackage@dow.land
+Stability   : experimental
+Portability : POSIX
+
+Data types that model the internal data structures in Doom to represent
+maps, as well as an interim data-type (`WadMap`) to bridge between these
+and Liquorice's more abstract types.
+-}
 module Doom.Wad ( WadLump(..)
                 , wadLumpLength
                 , wadLumpName
@@ -33,6 +47,7 @@ putInt   = putInt32le . fromIntegral
 
 -- data structures to closely represent WAD lumps ----------------------------
 
+-- | Enumeration (of sorts) of supported WAD lump types.
 data WadLump = WadLabel String
              | WadThings [Thing]   -- re-used from Liquorice
              | WadVertexes [Point] -- re-used from Liquorice
@@ -41,6 +56,7 @@ data WadLump = WadLabel String
              | WadSidedefs [Sidedef]
              | WadLump String L.ByteString deriving (Show)
 
+-- | Calculate the lump length of a given WadLump type.
 wadLumpLength :: WadLump -> Int
 wadLumpLength (WadLabel _)     = 0
 wadLumpLength (WadThings ts)   = 10 * length ts
@@ -50,6 +66,7 @@ wadLumpLength (WadSectors ss)  = 26 * length ss
 wadLumpLength (WadLinedefs ls) = 14 * length ls
 wadLumpLength (WadSidedefs ss) = 30 * length ss
 
+-- | Determine the lump name for a given WadLump.
 wadLumpName :: WadLump -> String
 wadLumpName (WadLabel s) = s
 wadLumpName (WadThings _) = "THINGS"
@@ -59,6 +76,7 @@ wadLumpName (WadLinedefs _)= "LINEDEFS"
 wadLumpName (WadSidedefs _)= "SIDEDEFS"
 wadLumpName (WadLump s _) = s
 
+-- | A Doom Line definition.
 data Linedef = Linedef { ldFrom    :: Int -- all shorts
                        , ldTo      :: Int
                        , ldFlags   :: Int
@@ -68,6 +86,7 @@ data Linedef = Linedef { ldFrom    :: Int -- all shorts
                        , ldBack    :: Int
                        } deriving (Show, Eq)
 
+-- | A Doom Line "Side" definition.
 data Sidedef = Sidedef { sdXoff   :: Int -- shorts or 8-byte strings
                        , sdYoff   :: Int
                        , sdUpper  :: String
@@ -146,13 +165,15 @@ dumpWadDir xs = L.concat (map dumpWadDir' xs) where
         putInt len
         putLazyByteString (str8 name)
 
--- XXX: rename
+-- | Convert a list of `WadLump`s into a PWAD represented as a Lazy
+-- `ByteString`.
 dumpWad :: [WadLump] -> L.ByteString
 dumpWad ws = let numents = length ws
                  diroffs = 12 + sum (map wadLumpLength ws)
                  header  = wadHeader numents diroffs
                  dir     = dumpWadDir (buildWadDir ws)
              in  L.concat (header : (map encode ws) ++ [dir])
+-- XXX: rename
 
 buildWadDir :: [WadLump] -> [(Int,Int,String)] -- offs,len,name
 buildWadDir ws = buildWadDir' 12 ws where
@@ -163,6 +184,7 @@ buildWadDir ws = buildWadDir' 12 ws where
 
 -- similar to above; but exactly one map-related lump ------------------------
 
+-- | A representation of all the WAD lumps that are required for a Doom map.
 data WadMap = WadMap { mapLabel        :: String
                      , mapThings       :: [Thing]
                      , mapLinedefs     :: [Linedef]
@@ -171,11 +193,14 @@ data WadMap = WadMap { mapLabel        :: String
                      , mapSectors      :: [Sector]
                      } deriving (Show, Eq)
 
+-- | Process a `WadMap` into a list of `WadLumps` that could be written to
+-- a PWAD.
 mapWad2Wad :: WadMap -> [WadLump]
 mapWad2Wad (WadMap label things lines sides vertexes sectors) =
     [ WadLabel label, WadThings things, WadLinedefs lines,
       WadSidedefs sides, WadVertexes vertexes, WadSectors sectors ]
 
+-- | Convert a `WadMap` into a list of lumps and dump them into a PWAD.
 buildMapWad :: WadMap -> L.ByteString
 buildMapWad = dumpWad . mapWad2Wad
 

@@ -1,5 +1,17 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
+{-# OPTIONS_HADDOCK prune #-}
 
+{-|
+Module      : Liquorice.Line
+Description : Functions for manipulating Lines.
+Copyright   : © Jonathan Dowland, 2020
+License     : GPL-3
+Maintainer  : jon+hackage@dow.land
+Stability   : experimental
+Portability : POSIX
+
+The Point and Line data-types and functions for manipulating Lines.
+-}
 module Liquorice.Line( Line(..)
                      , Point
                      , flipline
@@ -14,8 +26,11 @@ import Data.List
 import Test.Framework
 import Control.Monad
 
+-- | A 2D coordinate.
 type Point = (Int, Int)
 
+-- | The Line data-type corresponds closely to the Doom equivalent but
+-- has with unboxed fields.
 data Line = Line { from    :: Point
                  , to      :: Point
                  , lineTop :: String
@@ -27,19 +42,27 @@ data Line = Line { from    :: Point
                  , lineYoff:: Int
                  } deriving (Show, Eq)
 
+-- | Swap a `Line`'s direction.
 flipline :: Line -> Line
 flipline l = l { from = to l, to = from l }
 
+-- | Ordering function for `Line`s.
 lineOrient :: Line -> Ordering
 lineOrient l = let (a,b) = (from l, to l) in if a < b then GT else LT
 
+-- | Do the supplied `Line`s intersect?
 checkIntersect :: Line -> Line -> Bool
 checkIntersect a b = (sameXAxis a b || sameYAxis a b) && newCheckIntersect a b
 
+-- | Are the supplied `Line`s on the same point on the X axis?
 sameXAxis x y = all (==(fst (from x))) (map fst [to x, from y, to y])
+
+-- | Are the supplied `Line`s on the same point on the Y axis?
 sameYAxis x y = all (==(snd (from x))) (map snd [to x, from y, to y])
 
--- take advantage of tuple Ord
+-- | Utility function for `checkIntersect`. Check whether two `Line`s on the
+-- same plane intersect or not.
+-- takes advantage of tuple `Ord`.
 newCheckIntersect :: Line -> Line -> Bool
 newCheckIntersect l1 l2 = let nl1 = normalizeLine l1
                               nl2 = normalizeLine l2
@@ -68,7 +91,7 @@ test_from_example7   = (assertBool.not) $ checkIntersect l9 l10
 
 main = htfMain htf_thisModulesTests
 
--- split lines in existing list with a splitter line (which we don't insert)
+-- | Split `Line`s in a list with a splitter line (which we don't insert)
 splitLines :: [Line] -> Line -> [Line]
 splitLines [] _ = []
 splitLines (l:ls) c =
@@ -81,7 +104,7 @@ splitLines (l:ls) c =
 test_splitlines   = assertEqual 3 (length (splitLines [l1] l3))
 test_nosplitlines = assertEqual 1 (length (splitLines [l2] l1))
 
--- split a line by another, return the bits
+-- | Split a `Line` by another; return the bits.
 splitLine :: Line -> Line -> [Line]
 splitLine l cut = let  (a,b) = (from l, to l)
                        (c,d) = (from cut, to cut)
