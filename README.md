@@ -27,7 +27,7 @@ More specifically, *Liquorice* is an embedded domain-specific language (eDSL) wi
 
 ## More detailed example
 
-See [birds.hs](birds.hs), for an example program
+See [examples/birds.hs](examples/birds.hs), for an example program
 that generates a complete playable map. The map targets Doom 1 / The
 Ultimate Doom (map slot E2M8), and requires a doom engine with raised
 engine limits, such as [Crispy Doom](https://www.chocolate-doom.org/wiki/Crispy_Doom).
