@@ -4,7 +4,11 @@
 name:                Liquorice
 version:             0.0.1
 synopsis:            Algorithmic Doom map generation
-description:         .
+description:         A system for constructing maps for the computer game Doom
+                     by writing algorithms to describe the geometry. A Liquorice
+                     program is a series of instructions to move a virtual
+                     "turtle" or "pen", which define the walls, floors, rooms
+                     and monsters as it goes.
 homepage:            https://jmtd.net/doom/liquorice/
 license:             GPL-3
 license-file:        COPYING
