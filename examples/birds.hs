@@ -97,7 +97,7 @@ main = buildWad "birds.wad" $ runWadL $ do
   mapname "E2M8"
   housetex
   start <- getLoc
-  [north,east,south,west] <- hub
+  ~[north,east,south,west] <- hub
 
   setLoc north
   spoke starts tomb1 tomb1 floor_w1_down_HnF spiritarmor spoke1
