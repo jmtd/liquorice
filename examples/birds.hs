@@ -186,9 +186,7 @@ spoke x tombtag walktag trig ammo spoketag = do
   step 16 32
   sectortype 0 tombtag
   lower "STONGARG"
-  xoff 60
-  ibox 16 64 64 ceilheight housebright
-  xoff 0
+  withXoff 60 $ ibox 16 64 64 ceilheight housebright
   sectortype 0 0
   popsector
   -- ceiling openings & windows
@@ -394,47 +392,45 @@ demoncube = do
     lower "MARBFACE"
     upper "MARBFACE"
     step 32 0
-    quad (xoff 32 >> straight 64 >> xoff 45 >> draw 32 32 >> xoff 0 >> turnright)
+
+    -- the inner octagon
+    quad (straight 64 >> draw 32 32 >> turnright) -- Lines 1 & 2
     rightsector 128 128 skybright
 
-    -- diagonals: 
+    -- outer bigger triangles
     floorflat "MFLR8_4"
     quad $ do
         step 64 0
-        draw (-64) 0
+        withXoff 32 $ draw (-64) 0 -- redrawing Linedef 1
         innerrightsector 0 128 skybright
-        draw 32 (-32)
-        draw 32 32
+        draw 32 (-28) -- Linedef 9
+        draw 32 28 -- Linedef 10
         extendsector
 
         step 32 32
         turnright
 
+    -- outer smaller triangles
     floorflat "DEM1_5"
     ceil "F_SKY1"
     quad $ do
-        step 64 0
-        xoff 45
-        step 32 32
-        xoff 0
-        draw (-32) (-32)
+        step 96 32
+        withXoff 42 $ draw (-32) (-32) -- redrawing Linedef 2
         innerrightsector 128 256 skybright
-        draw 32 0
-        draw 0 32
+        draw 32 0 -- Linedef 11
+        draw 0 32 -- Linedef 12
         extendsector
         turnright
 
     twice $ quad $ popsector
     popsector
 
+    -- retrace the outer boundary of the demoncube and tie those lines into
+    -- the parent sector
     quad $ do
-        xoff 32
-        straight (-32)
-        xoff 0
-        draw 0 32
-        xoff 90
-        draw (-32) 32
-        xoff 0
-        draw 32 32
+        withXoff 96   $ straight (-32) -- redrawing linedef 12
+        withXoff 0    $ draw 0 32      -- redrawing linedef 11
+        withXoff 89   $ draw (-28) 32  -- redrawing linedef 10
+        withXoff (-2) $ draw 28 32     -- redrawing linedef 9
         turnleft
     extendsector
