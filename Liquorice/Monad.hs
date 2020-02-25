@@ -48,6 +48,7 @@ module Liquorice.Monad
     , sectortype
     , setthing
     , mapname
+    , withXoff
 
     , runWadL
 
@@ -156,6 +157,15 @@ place x y stuff = do
     step (-1 * x) (-1 * y)
     return r
 -- XXX this should probably be "and return the pen to that location afterwards."
+
+-- | Perform the supplied actions with `paletteXoff` set to the supplied value,
+-- then reset `paletteXoff`.
+withXoff :: Int -> State Context () -> State Context ()
+withXoff x c = do
+    old <- get
+    xoff x
+    c
+    xoff (paletteXoff old)
 
 test_box_orientation = assertEqual (orientation a) (orientation b) where
     a = start
