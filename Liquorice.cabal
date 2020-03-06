@@ -23,11 +23,11 @@ test-suite test-hwadc
   hs-source-dirs:      .
   type:                exitcode-stdio-1.0
   Main-is:             TestMain.hs
-  build-depends:       base >=4.9,
-                       binary,
-                       bytestring,
-                       HTF,
-                       mtl
+  build-depends:       base                 >= 4.11.1 && < 4.12,
+                       binary               >= 0.8.5 && < 0.9,
+                       bytestring           >= 0.10.8 && < 0.11,
+                       HTF                  >= 0.13.2 && < 0.14,
+                       mtl                  >= 2.2.2 && < 2.3
   Default-language:    Haskell98
   other-modules:       Liquorice,
                        Liquorice.Wad,
@@ -42,7 +42,7 @@ library
                        Liquorice.Monad,
                        Liquorice.Pure,
                        Liquorice.Render
-  build-depends:       base >=4.9,
+  build-depends:       base,
                        binary,
                        bytestring,
                        HTF,
