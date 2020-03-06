@@ -15,7 +15,8 @@ maintainer:          jon+hackage@dow.land
 copyright:           © 2020 Jonathan Dowland
 category:            Game
 build-type:          Simple
-cabal-version:       >=1.10
+cabal-version:       1.18
+extra-doc-files:     README.md, examples/birds.hs
 
 test-suite test-hwadc
   hs-source-dirs:      .
