@@ -29,15 +29,15 @@ test-suite test-hwadc
                        HTF,
                        mtl
   Default-language:    Haskell98
-  other-modules:       Doom.Wad,
-                       Liquorice,
+  other-modules:       Liquorice,
+                       Liquorice.Wad,
                        Liquorice.Line,
                        Liquorice.Monad,
                        Liquorice.Pure,
                        Liquorice.Render
 library
-  exposed-modules:     Doom.Wad,
-                       Liquorice,
+  exposed-modules:     Liquorice,
+                       Liquorice.Wad,
                        Liquorice.Line,
                        Liquorice.Monad,
                        Liquorice.Pure,

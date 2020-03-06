@@ -2,7 +2,7 @@
 {-# OPTIONS_HADDOCK prune #-}
 
 {-|
-Module      : Doom.Wad
+Module      : Liquorice.Wad
 Description : Data types modelling Doom internal data structures
 Copyright   : © Jonathan Dowland, 2020
 License     : GPL-3
@@ -14,17 +14,17 @@ Data types that model the internal data structures in Doom to represent
 maps, as well as an interim data-type (`WadMap`) to bridge between these
 and Liquorice's more abstract types.
 -}
-module Doom.Wad ( WadLump(..)
-                , wadLumpLength
-                , wadLumpName
-                , Linedef(..)
-                , Sidedef(..)
-                , WadMap(..)
-                , mapWad2Wad
-                , dumpWad
+module Liquorice.Wad ( WadLump(..)
+                     , wadLumpLength
+                     , wadLumpName
+                     , Linedef(..)
+                     , Sidedef(..)
+                     , WadMap(..)
+                     , mapWad2Wad
+                     , dumpWad
 
-                , htf_thisModulesTests
-                ) where
+                     , htf_thisModulesTests
+                     ) where
 
 import qualified Data.ByteString.Lazy as L
 import qualified Data.ByteString.Lazy.Char8 as LC

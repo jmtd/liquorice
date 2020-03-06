@@ -27,7 +27,7 @@ import Data.Function ((&))
 import Liquorice
 import Liquorice.Pure
 import Liquorice.Line
-import Doom.Wad
+import Liquorice.Wad
 
 -- utility stuff -------------------------------------------------------------
 

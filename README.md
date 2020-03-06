@@ -116,7 +116,7 @@ These are back-end implementation details:
 
  * `Liquorice/Pure.hs` — most of the "standard library", in pure functions
  * `Liquorice/Line.hs` — `Line` type, line splitting and tests
- * `Doom/Wad.hs` — Wad and WadMap definitions and binary serialisation
+ * `Liquorice/Wad.hs` — Wad and WadMap definitions and binary serialisation
  * `TestMain.hs` — HTF test harness
 
 ## Author
