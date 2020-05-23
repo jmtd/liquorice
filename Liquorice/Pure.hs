@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
 {-# OPTIONS_HADDOCK prune #-}
+{-# LANGUAGE TemplateHaskell #-}
 
 {-|
 Module      : Liquorice.Pure
@@ -15,33 +16,37 @@ Liquorice programs that evaluate to Doom maps. Monadic equivalents are defined
 in `Liquorice.Monad`. Most people may find those more convenient.
 -}
 module Liquorice.Pure
-    ( draw
-    , rightsector
-    , step
-    , turnright
-    , turnleft
-    , turnaround
-    , innerrightsector
-    , innerleftsector
-    , leftsector
-    , popsector
-    , thing
-    , mid
-    , upper
-    , lower
-    , xoff
-    , yoff
-    , floorflat
+    ( pureFns
+
+    , addLine
+    , box
     , ceil
+    , draw
+    , floorflat
+    , ibox
+    , innerleftsector
+    , innerrightsector
+    , leftsector
     , linetype
+    , lower
+    , mapname
+    , mid
+    , place
+    , popsector
+    , pushpop
+    , rightsector
     , sectortype
     , setthing
-    , mapname
-    , box
-    , ibox
-    , pushpop
-    , place
-    , addLine
+    , step
+    , straight
+    , thing
+    , turnaround
+    , turnleft
+    , turnright
+    , upper
+    , withXoff
+    , xoff
+    , yoff
 
     , htf_thisModulesTests
     ) where
@@ -54,6 +59,40 @@ import Liquorice
 import Liquorice.Line
 
 main = htfMain htf_thisModulesTests
+
+pureFns = [ 'addLine
+          , 'box
+          , 'ceil
+          , 'draw
+          , 'floorflat
+          , 'ibox
+          , 'innerleftsector
+          , 'innerrightsector
+          , 'leftsector
+          , 'linetype
+          , 'lower
+          , 'mapname
+          , 'mid
+--        , 'place
+          , 'popsector
+--        , 'pushpop
+--        , 'quad
+          , 'rightsector
+          , 'sectortype
+          , 'setthing
+          , 'step
+          , 'straight
+          , 'thing
+--        , 'triple
+          , 'turnaround
+          , 'turnleft
+          , 'turnright
+--        , 'twice
+          , 'upper
+--        , 'withXoff -- not trivially wrappable
+          , 'xoff
+          , 'yoff
+          ]
 
 -- | Move the pen forwards and sideways by the supplied amounts.
 step :: Int -> Int -> Context -> Context
@@ -146,6 +185,11 @@ mid s c = c { paletteMid = s }
 lower :: String -> Context -> Context
 lower s c = c { paletteBot = s }
 
+-- | Perform the supplied actions with `paletteXoff` set to the supplied value,
+-- then reset `paletteXoff`.
+withXoff :: Int -> (Context -> Context) -> Context -> Context
+withXoff x fn c = c & xoff x & fn & xoff (paletteXoff c)
+
 -- | Set the texture x-offset value for future lines.
 xoff :: Int -> Context -> Context
 xoff x c = c { paletteXoff = x }
@@ -209,6 +253,10 @@ test_one_thing = assertEqual 1 (length (things (start & thing)))
 -- | Evaluate `f` twice.
 twice :: (Context -> Context) -> Context -> Context
 twice f c = iterate f c !! 2
+
+-- | Evaluate `f` three times.
+triple :: (Context -> Context) -> Context -> Context
+triple f c = iterate f c !! 3
 
 -- | Evaluate `f` four times.
 quad :: (Context -> Context) -> Context -> Context

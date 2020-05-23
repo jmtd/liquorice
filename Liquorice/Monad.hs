@@ -1,4 +1,6 @@
 {-# OPTIONS_GHC -F -pgmF htfpp #-}
+{-# LANGUAGE TemplateHaskell #-}
+
 {- We can't use Haddock "prune" here until we document all the wrapped
  - Pure functions -}
 
@@ -58,87 +60,33 @@ module Liquorice.Monad
 import Test.Framework hiding (wrap)
 import Control.Monad.State.Lazy
 import Control.Monad
+import Language.Haskell.TH hiding (location)
 
 import Liquorice
 import qualified Liquorice.Pure as P
+import Liquorice.Monad.TH
 
-------------------------------------------------------------------------------
--- monadic versions
-
--- wraps a function above and takes a return value to propagate
-wrapR :: a -> (Context -> Context) -> State Context a
-wrapR r fn = do
-    old <- get
-    put (fn old)
-    return r
-
--- return-less version of above
-wrap = wrapR ()
+-- injects monadic-wrapped versions of the functions from Liquorice.Pure
+wrapPureFunctions
 
 -- | Evaluate the supplied State Context to produce a pure Context. In other words,
 -- run the supplied Liquorice DSL program and calculate the resulting structure.
 runWadL x = snd $ runState x start
 
--- wrapped pure functions with icky names
-turnright         = wrap P.turnright
-turnleft          = wrap P.turnleft
-turnaround        = wrap P.turnaround
-step x y          = wrap $ P.step x y
-draw x y          = wrap $ P.draw x y
-rightsector f c l = wrap $ P.rightsector f c l
-innerrightsector f c l = wrap $ P.innerrightsector f c l
-innerleftsector f c l = wrap $ P.innerleftsector f c l
-popsector         = wrap $ P.popsector
-leftsector  f c l = wrap $ P.leftsector f c l
-thing             = wrap P.thing
-mid s             = wrap $ P.mid s
-upper s           = wrap $ P.upper s
-lower s           = wrap $ P.lower s
-xoff x            = wrap $ P.xoff x
-yoff y            = wrap $ P.yoff y
-floorflat s       = wrap $ P.floorflat s
-ceil s            = wrap $ P.ceil s
-linetype ty ta = wrap $ P.linetype ty ta
-sectortype ty ta = wrap $ P.sectortype ty ta
-setthing s        = wrap $ P.setthing s
-mapname s         = wrap $ P.mapname s
-
-straight n        = draw n 0
-
-blah = runWadL $ do
-  straight 64
-  turnright
-  straight 64
-  turnright
-  straight 64
-  turnright
-  straight 64
-  turnright
-  rightsector 0 128 160
+-------------------------------------------------------------------
+-- the following functions are re-implemented rather than wrapped,
+-- as wrapping them would require translating their arguments of
+-- type (Context -> Context) to (State Context ()) and sequencing
+-- them
 
 -- | Perform the supplied action twice.
-twice = replicateM_ 2
+twice x = replicateM_ 2 x
 
 -- | Perform the supplied action three times.
 triple x = replicateM_ 3 x
 
 -- | Perform the supplied action four times.
 quad x = replicateM_ 4 x
-
--- | Draw a primitive rectangular box, X and Y in size, and give the resulting
--- sector's properties as `f` floor height, `c` ceiling height and `l` light
--- level.
-box x y f c l = do
-  twice $ do
-    straight x
-    turnright
-    straight y
-    turnright
-  rightsector f c l
-
--- | Draw a primitive rectangular box, similar to `box`, but as an inner sector
--- parented by the last-drawn Sector.
-ibox h w f c l = wrap $ P.ibox h w f c l
 
 -- | Perform the actions `x` and then return the pen `location` to the value
 -- it had prior to `x`.
@@ -166,6 +114,20 @@ withXoff x c = do
     xoff x
     c
     xoff (paletteXoff old)
+
+------------------------------------------------------------------------------
+-- tests
+
+blah = runWadL $ do
+  straight 64
+  turnright
+  straight 64
+  turnright
+  straight 64
+  turnright
+  straight 64
+  turnright
+  rightsector 0 128 160
 
 test_box_orientation = assertEqual (orientation a) (orientation b) where
     a = start

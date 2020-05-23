@@ -6,8 +6,8 @@ import Control.Monad.State.Lazy
 import Data.Tuple (swap)
 
 import Liquorice
-import Liquorice.Monad
 import Liquorice.Render
+import Liquorice.Monad
 
 -- stuff to move elsewhere ---------------------------------------------------
 
