@@ -79,11 +79,11 @@ l3 = mktestLine (4,0) ( 8,0)
 l4 = mktestLine (0,2) ( 0,5)
 l5 = mktestLine (4,2) ( 7,2)
 
-test_xaxis_intersect = assertBool       $checkIntersect l1 l3
-test_xaxis_none      =(assertBool . not)$checkIntersect l1 l2
-test_yaxis_intersect = assertBool       $checkIntersect l2 l4
-test_yaxis_none      =(assertBool . not)$checkIntersect l2 l3
-test_xaxis_none2     =(assertBool . not)$checkIntersect l1 l5
+test_xaxis_intersect = assertBool       $ checkIntersect l1 l3
+test_xaxis_none      =(assertBool . not)$ checkIntersect l1 l2
+test_yaxis_intersect = assertBool       $ checkIntersect l2 l4
+test_yaxis_none      =(assertBool . not)$ checkIntersect l2 l3
+test_xaxis_none2     =(assertBool . not)$ checkIntersect l1 l5
 
 l9 = mktestLine (0,128) (128,128)
 l10= mktestLine (128,128) (192,128)
@@ -163,14 +163,14 @@ instance Ord Line where
 
 normalizeLine l = if (from l) > (to l) then flipline l else l
 
-test_rev_xaxis_intersect = assertBool       $checkIntersect l1 (flipline l3)
-test_rev_xaxis_none      =(assertBool . not)$checkIntersect l1 (flipline l2)
+test_rev_xaxis_intersect = assertBool       $ checkIntersect l1 (flipline l3)
+test_rev_xaxis_none      =(assertBool . not)$ checkIntersect l1 (flipline l2)
 
-test_rev_yaxis_intersect = assertBool       $checkIntersect l2 (flipline l4)
-test_rev_yaxis_intersect2 = assertBool       $checkIntersect (flipline l2) (flipline l4)
+test_rev_yaxis_intersect = assertBool       $ checkIntersect l2 (flipline l4)
+test_rev_yaxis_intersect2 = assertBool       $ checkIntersect (flipline l2) (flipline l4)
 
-test_rev_yaxis_none      =(assertBool . not)$checkIntersect l2 (flipline l3)
-test_rev_xaxis_none2     =(assertBool . not)$checkIntersect l1 (flipline l5)
+test_rev_yaxis_none      =(assertBool . not)$ checkIntersect l2 (flipline l3)
+test_rev_xaxis_none2     =(assertBool . not)$ checkIntersect l1 (flipline l5)
 test_rev_splitlines   = assertEqual 3 (length (splitLines [l1] (flipline l3)))
 test_rev_nosplitlines = assertEqual 1 (length (splitLines [l2] (flipline l1)))
 
