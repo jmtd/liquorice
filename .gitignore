@@ -1,0 +1,11 @@
+.HTF
+.stack-work
+*.png
+*.dyn_hi
+*.dyn_o
+*.hi
+*.o
+*.dump-splices
+dist
+*.wad
+tags
