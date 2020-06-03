@@ -24,16 +24,18 @@ import Test.Framework hiding (wrap)
 import Liquorice
 import Liquorice.Pure
 
-wrapPureFunctions = liftM concat (mapM mkWrap pureFns)
+wrapPureFunctions = mapM mkWrap pureFns
 
 mkWrap fn = do
+    let name = mkName (nameBase fn)
+
     info    <- reify fn
     let ty   = (\(VarI _ t _ ) -> t) info
     let n    = arity ty - 1
-    let name = mkName (nameBase fn)
     args    <- replicateM n (newName "arg")
+
     rhs     <- [| modify $(mkFnApp (varE fn) args) :: State Context () |]
-    return [FunD name [ Clause (map VarP args) (NormalB rhs) [] ]]
+    return   $ FunD name [ Clause (map VarP args) (NormalB rhs) [] ]
 
 arity :: Type -> Int
 arity = arity' 0 where
