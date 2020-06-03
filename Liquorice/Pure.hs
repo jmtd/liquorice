@@ -34,15 +34,18 @@ module Liquorice.Pure
     , place
     , popsector
     , pushpop
+    , quad
     , rightsector
     , sectortype
     , setthing
     , step
     , straight
     , thing
+    , triple
     , turnaround
     , turnleft
     , turnright
+    , twice
     , upper
     , withXoff
     , xoff
