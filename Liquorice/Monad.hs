@@ -1,7 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
-
-{- We can't use Haddock "prune" here until we document all the wrapped
- - Pure functions -}
+{-# OPTIONS_HADDOCK prune #-}
 
 {-|
 Module      : Liquorice.Monad
@@ -18,41 +16,7 @@ operated on.
 
 Many of these functions are wrapped versions of those in `Liquorice.Pure`.
 -}
-module Liquorice.Monad
-(     twice
-    , triple
-    , quad
-    , box
-    , ibox
-    , pushpop
-    , place
-    , straight
-    , turnright
-    , turnleft
-    , turnaround
-    , rightsector
-    , innerrightsector
-    , innerleftsector
-    , popsector
-    , leftsector
-    , step
-    , draw
-    , thing
-    , mid
-    , upper
-    , lower
-    , xoff
-    , yoff
-    , ceil
-    , floorflat
-    , linetype
-    , sectortype
-    , setthing
-    , mapname
-    , withXoff
-
-    , runWadL
-) where
+module Liquorice.Monad where
 
 import Control.Monad.State.Lazy
 import Control.Monad
