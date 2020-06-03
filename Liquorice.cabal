@@ -34,6 +34,7 @@ test-suite test-hwadc
                        Liquorice.Line,
                        Liquorice.Monad,
                        Liquorice.Monad.TH,
+                       Liquorice.Monad.Test,
                        Liquorice.Pure,
                        Liquorice.Render
 library
@@ -42,6 +43,7 @@ library
                        Liquorice.Line,
                        Liquorice.Monad,
                        Liquorice.Monad.TH,
+                       Liquorice.Monad.Test,
                        Liquorice.Pure,
                        Liquorice.Render
   build-depends:       base                 >= 4.11.1 && < 4.13,

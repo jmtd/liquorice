@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -F -pgmF htfpp #-}
 {-# LANGUAGE TemplateHaskell #-}
 
 {- We can't use Haddock "prune" here until we document all the wrapped
@@ -53,11 +52,8 @@ module Liquorice.Monad
     , withXoff
 
     , runWadL
-
-    , htf_thisModulesTests
 ) where
 
-import Test.Framework hiding (wrap)
 import Control.Monad.State.Lazy
 import Control.Monad
 import Language.Haskell.TH hiding (location)
@@ -114,40 +110,3 @@ withXoff x c = do
     xoff x
     c
     xoff (paletteXoff old)
-
-------------------------------------------------------------------------------
--- tests
-
-blah = runWadL $ do
-  straight 64
-  turnright
-  straight 64
-  turnright
-  straight 64
-  turnright
-  straight 64
-  turnright
-  rightsector 0 128 160
-
-test_box_orientation = assertEqual (orientation a) (orientation b) where
-    a = start
-    b = runWadL $ box 64 64 0 0 0
-
-test_box_pos = assertEqual (location a) (location b) where
-    a = start
-    b = runWadL $ box 64 64 0 0 0
-
-nicerBlah = runWadL $ do
-    box 64 64 0 128 160
-
-test_equiv1 = assertEqual blah nicerBlah
-
-blah2 = runWadL (straight 64)
-test_lines_generated = assertEqual 1 (length (linedefs blah2))
-
-blah3 = runWadL $ do
-    straight 64
-    rightsector 0 0 0
-test_lines_consumed = assertEqual 0 (length (linedefs blah3))
-
-main = htfMain htf_thisModulesTests
