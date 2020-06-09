@@ -41,13 +41,13 @@ mkWrap fn = do
 
 -- convert a list of expressions to function application e.g.
 -- mkFnApp f [a,b,c] => ((f a) b) c => f a b c
--- wrap higher-order functions to make them State Context ()
-mkFnApp fn zargs = foldl zomg fn zargs
-    where zomg e (isHoF, f) = appE e $ if   isHoF
-                                       then [| snd . runState $(varE f) |]
-                                       else varE f
+-- wrap higher-order functions (Context -> Context) to make
+-- them State Context ()
+mkFnApp = foldl $ \e (isHoF, f) -> appE e $ if   isHoF
+                                            then [| snd . runState $(varE f) |]
+                                            else varE f
 
--- Walk over a Type, return a list of its arguments
+-- Walk over a function Type, return a list of its arguments
 -- True: arg needs wrapping (it's a higher order function)
 -- False: arg does not need wrapping
 -- we throw away the last argument (the input Context)
