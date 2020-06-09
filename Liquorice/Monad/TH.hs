@@ -31,18 +31,32 @@ mkWrap fn = do
 
     info    <- reify fn
     let ty   = (\(VarI _ t _ ) -> t) info
-    let n    = arity ty - 1
-    args    <- replicateM n (newName "arg")
+    wargs   <- getWrapArgs ty
+    args    <- mapM (\_ -> newName "a") wargs
 
-    rhs     <- [| modify $(mkFnApp (varE fn) args) :: State Context () |]
+    rhs     <- [| modify $(mkFnApp (varE fn) (zip wargs args)) :: State Context () |]
+
     return   $ FunD name [ Clause (map VarP args) (NormalB rhs) [] ]
 
-arity :: Type -> Int
-arity = arity' 0 where
-    arity' n (AppT (AppT ArrowT _) remainder) = arity' (n+1) remainder
-    arity' n (ForallT _ _ remainder) = arity' n remainder
-    arity' n _ = n
 
 -- convert a list of expressions to function application e.g.
 -- mkFnApp f [a,b,c] => ((f a) b) c => f a b c
-mkFnApp = foldl (\e -> appE e . varE)
+-- wrap higher-order functions to make them State Context ()
+mkFnApp fn zargs = foldl zomg fn zargs
+    where zomg e (isHoF, f) = appE e $ if   isHoF
+                                       then [| snd . runState $(varE f) |]
+                                       else varE f
+
+-- Walk over a Type, return a list of its arguments
+-- True: arg needs wrapping (it's a higher order function)
+-- False: arg does not need wrapping
+-- we throw away the last argument (the input Context)
+getWrapArgs :: Type -> Q [Bool]
+getWrapArgs (ForallT _ _ remainder) = getWrapArgs remainder
+getWrapArgs t = do
+    ty <- [t| Context -> Context |]
+    return . reverse . tail $ getWrapArgs' ty [] t
+    where
+        getWrapArgs' ty ns (AppT (AppT ArrowT arg) remainder) =
+            getWrapArgs' ty ((arg == ty):ns) remainder
+        getWrapArgs' ty ns _ = ns

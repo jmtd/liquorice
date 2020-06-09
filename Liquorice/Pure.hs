@@ -76,23 +76,23 @@ pureFns = [ 'addLine
           , 'lower
           , 'mapname
           , 'mid
---        , 'place
+          , 'place
           , 'popsector
---        , 'pushpop
---        , 'quad
+          , 'pushpop
+          , 'quad
           , 'rightsector
           , 'sectortype
           , 'setthing
           , 'step
           , 'straight
           , 'thing
---        , 'triple
+          , 'triple
           , 'turnaround
           , 'turnleft
           , 'turnright
---        , 'twice
+          , 'twice
           , 'upper
---        , 'withXoff -- not trivially wrappable
+          , 'withXoff
           , 'xoff
           , 'yoff
           ]
