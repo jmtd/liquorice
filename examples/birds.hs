@@ -44,6 +44,12 @@ setLoc (p,o) = do
     ctx <- get
     put ctx { location = p, orientation = o }
 
+getLocAt x y = do
+    step x y
+    l <- getLoc
+    step (negate x) (negate y)
+    return l
+
 deathmatchstart = setthing 11
 boxofrockets = setthing 2046
 rocket = setthing 2010
@@ -142,14 +148,16 @@ hub = do
       draw 128 128
   hub <- getLoc
   turnleft
-  west <- place 0 32 getLoc
+
+  west <- getLocAt 0 32
   seg
-  north <- place 0 32 getLoc
+  north <- getLocAt 0 32
   seg
-  east <- place 0 32 getLoc
+  east <- getLocAt 0 32
   seg
-  south <- place 0 32 getLoc
+  south <- getLocAt 0 32
   seg
+
   rightsector 8 ceilheight housebright
   turnright
 
