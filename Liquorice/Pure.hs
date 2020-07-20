@@ -26,6 +26,7 @@ module Liquorice.Pure
     , ibox
     , innerleftsector
     , innerrightsector
+    , left
     , leftsector
     , linetype
     , lower
@@ -36,6 +37,7 @@ module Liquorice.Pure
     , pushpop
     , quad
     , rightsector
+    , right
     , sectortype
     , setthing
     , step
@@ -50,6 +52,26 @@ module Liquorice.Pure
     , withXoff
     , xoff
     , yoff
+
+    , deathmatchstart
+    , boxofrockets
+    , rocket
+    , stimpak
+    , greenarmor
+    , rocketlauncher
+    , lostsoul
+    , chaingun
+    , healthpotion
+    , spiritarmor
+    , cyberdemon
+    , shortredfirestick
+    , player1start
+    , player2start
+    , player3start
+    , player4start
+    , teleportdest
+    , candle
+    , soulsphere
 
     , htf_thisModulesTests
     ) where
@@ -71,6 +93,7 @@ pureFns = [ 'addLine
           , 'ibox
           , 'innerleftsector
           , 'innerrightsector
+          , 'left
           , 'leftsector
           , 'linetype
           , 'lower
@@ -81,6 +104,7 @@ pureFns = [ 'addLine
           , 'pushpop
           , 'quad
           , 'rightsector
+          , 'right
           , 'sectortype
           , 'setthing
           , 'step
@@ -95,6 +119,25 @@ pureFns = [ 'addLine
           , 'withXoff
           , 'xoff
           , 'yoff
+          , 'deathmatchstart
+          , 'boxofrockets
+          , 'rocket
+          , 'stimpak
+          , 'greenarmor
+          , 'rocketlauncher
+          , 'lostsoul
+          , 'chaingun
+          , 'healthpotion
+          , 'spiritarmor
+          , 'cyberdemon
+          , 'shortredfirestick
+          , 'player1start
+          , 'player2start
+          , 'player3start
+          , 'player4start
+          , 'teleportdest
+          , 'candle
+          , 'soulsphere
           ]
 
 -- | Move the pen forwards and sideways by the supplied amounts.
@@ -135,6 +178,14 @@ rightsector f c l ctx = let s = Sector f c (paletteFloor ctx) (paletteCeil ctx) 
                             newsectors = s : sectors ctx
                          in ctx { sectors = newsectors, linedefs = [] }
 
+-- | draw a line to the right
+right :: Int -> Context -> Context
+right x = straight x . turnright
+
+-- | draw a line to the left
+left :: Int -> Context -> Context
+left x = straight x . turnleft
+
 -- | Define a new Sector on the left-hand side of the pen.
 leftsector :: Int -> Int -> Int -> Context -> Context
 leftsector f c l ctx = let ls = map flipline (linedefs ctx)
@@ -173,11 +224,7 @@ popsector c = case length (sectors c) of
 -- | Define a new `Thing` at the current pen location.
 thing :: Context -> Context
 thing c = let newthing = Thing (location c) angle (curThingType c) 7 -- all skills
-              angle = case orientation c of
-                  North -> 90
-                  East  -> 0
-                  South -> 270
-                  West  -> 180
+              angle = orientationToAngle (orientation c)
           in c { things = newthing : things c }
 
 -- | Set the mid-texture value for future lines.
@@ -222,9 +269,10 @@ linetype ty tag c = c { paletteLineType = ty, paletteLineTag = tag }
 sectortype :: Int -> Int -> Context -> Context
 sectortype ty tag c = c { paletteSectorType = ty, paletteSectorTag = tag }
 
--- | Set the type of future-defined `Thing`s.
-setthing :: Int -> Context -> Context
-setthing s c = c { curThingType = s }
+-- | Set the type of future-defined `Thing`s. We accept Integer here
+-- to match Haskell's defaulting of numeric constants.
+setthing :: Integer -> Context -> Context
+setthing s c = c { curThingType = fromIntegral s }
 
 -- | Set the name of the current map.
 mapname :: String -> Context -> Context
@@ -310,3 +358,23 @@ workbest (l:ls) (c:cs) =
         y = workbest  x  cs
         z = workbest  ls (c:cs)
     in  y ++ z
+
+deathmatchstart   = setthing 11
+boxofrockets      = setthing 2046
+rocket            = setthing 2010
+stimpak           = setthing 2011
+greenarmor        = setthing 2018
+rocketlauncher    = setthing 2003
+lostsoul          = setthing 3006
+chaingun          = setthing 2002
+healthpotion      = setthing 2014
+spiritarmor       = setthing 2015
+cyberdemon        = setthing 16
+shortredfirestick = setthing 57
+player1start      = setthing 1
+player2start      = setthing 2
+player3start      = setthing 3
+player4start      = setthing 4
+teleportdest      = setthing 14
+candle            = setthing 34
+soulsphere        = setthing 2013

@@ -11,79 +11,11 @@ import Liquorice.Monad
 
 -- stuff to move elsewhere ---------------------------------------------------
 
-right x = turnright >> straight x
-left x = turnleft >> straight x
-
-cluster stuff dist = do
-  turnaround
-  step dist dist
-  turnaround
-  pushpop $ triple $ do
-    pushpop $ triple $ do
-        stuff
-        step dist 0
-    step 0 dist
-
-surround stuff dist = do
-    pushpop $ do
-        step (-1 * dist) (-1 * dist)
-        quad $ do
-            twice $ do
-                stuff
-                step dist 0
-            stuff
-            turnright
-
-getLoc :: State Context (Point, Orientation)
-getLoc = do
-    ctx <- get
-    return (location ctx, orientation ctx)
-
-setLoc :: (Point, Orientation) -> State Context ()
-setLoc (p,o) = do
-    ctx <- get
-    put ctx { location = p, orientation = o }
-
-getLocAt x y = do
-    step x y
-    l <- getLoc
-    step (negate x) (negate y)
-    return l
-
-deathmatchstart = setthing 11
-boxofrockets = setthing 2046
-rocket = setthing 2010
-stimpak = setthing 2011
-greenarmor = setthing 2018
-rocketlauncher = setthing 2003
-lostsoul = setthing 3006
-chaingun = setthing 2002
-healthpotion = setthing 2014
-spiritarmor  = setthing 2015
-cyberdemon = setthing 16
-shortredfirestick = setthing 57
-player1start = setthing 1
-player2start = setthing 2
-player3start = setthing 3
-player4start = setthing 4
-teleportdest = setthing 14
-candle = setthing 34
-soulsphere = setthing 2013
-
 floor_w1_down_HnF = 19
 floor_w1_down_LnF_TxTy = 37
 crusher_w1_slow = 0 -- XXX real value
 exit_w1_normal = 52
 teleport_wr = 97
-
-extendsector :: State Context ()
-extendsector = do
-    old <- get
-    let lines = linedefs old
-        olds  = head (sectors old)
-        news  = olds { sectorLines = sectorLines olds ++ lines }
-        new   = old { sectors = news : (tail (sectors old)), linedefs = [] }
-    put new
 
 -- constants for this map ----------------------------------------------------
 

@@ -22,6 +22,9 @@ module Liquorice
     , Thing(..)
     , Sector(..)
 
+    , angleToOrientation
+    , orientationToAngle
+
     , start
 
     , htf_thisModulesTests
@@ -93,6 +96,18 @@ data Thing = Thing { thingPos   :: Point
                    , thingType  :: Int
                    , thingFlags :: Int
                    } deriving (Show, Eq)
+
+angleToOrientation :: Int -> Orientation
+angleToOrientation 0   = East
+angleToOrientation 180 = South
+angleToOrientation 270 = West
+angleToOrientation _   = North
+
+orientationToAngle :: Orientation -> Int
+orientationToAngle East  = 0
+orientationToAngle North = 90
+orientationToAngle South = 180
+orientationToAngle West  = 270
 
 -- | An initial Context, from which to derive a new map. `Empty` lines
 -- and `Sector` lists and sensible default values for "palette" parameters.
