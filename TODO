@@ -26,6 +26,8 @@ demo maps / main key points over wadc?
 * thought: arguments to box/ibox are unclear since they're all ints
   if the x,y was a tuple, it would be less ambiguous
 
+    * also I've picked a different order to WadC, by accident.
+
 * Doom/* should probably not depend upon stuff in Liquorice. Move common
   definitions (abstract Linedef etc. types) into Doom/*.
 
@@ -34,3 +36,7 @@ birds todo:
 
 skybox
 "with_sectortype / with_linetype"?
+
+--
+
+ * should 'pushpop' restore orientation? should 'place'?
