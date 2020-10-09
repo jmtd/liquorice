@@ -41,6 +41,7 @@ module Liquorice.Pure
     , sectortype
     , setthing
     , step
+    , step'
     , straight
     , thing
     , triple
@@ -144,11 +145,15 @@ pureFns = [ 'addLine
 step :: Int -> Int -> Context -> Context
 step forward sideways c = c { location = newloc }
   where
-    newloc = step' (location c) (orientation c)
-    step' (x,y) North = (x+sideways, y+forward)
-    step' (x,y) South = (x-sideways, y-forward)
-    step' (x,y) East  = (x+forward, y-sideways)
-    step' (x,y) West  = (x-forward, y+sideways)
+    newloc = step' (location c) (orientation c) forward sideways
+
+-- | Given a location and orientation, return the adjusted delta
+-- to apply to global coordinates in order to move forward and
+-- sideways by the provided amounts
+step' (x,y) North forward sideways = (x+sideways, y+forward)
+step' (x,y) South forward sideways = (x-sideways, y-forward)
+step' (x,y) East  forward sideways = (x+forward, y-sideways)
+step' (x,y) West  forward sideways = (x-forward, y+sideways)
 
 -- | Define a line from the current `location` to a new one reached by
 -- moving forwards and sideways by the supplied amounts.
