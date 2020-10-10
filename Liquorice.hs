@@ -74,6 +74,9 @@ data Context = Context { location :: Point
                        , paletteYoff :: Int
                        , mapName :: String
 
+                       -- for the pseudo-RNG
+                       , seed :: Int
+
                        } deriving (Show, Eq)
 
 -- | An approximation of Doom's Sector data-type, with unboxed fields.
@@ -130,4 +133,5 @@ start = Context { location=(0,0)
                 , mapName="MAP01"
                 , paletteXoff=0
                 , paletteYoff=0
+                , seed=0
                 }

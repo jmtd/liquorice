@@ -74,6 +74,9 @@ module Liquorice.Pure
     , candle
     , soulsphere
 
+    , setseed
+    , rand
+
     , htf_thisModulesTests
     ) where
 
@@ -139,6 +142,7 @@ pureFns = [ 'addLine
           , 'teleportdest
           , 'candle
           , 'soulsphere
+          , 'setseed
           ]
 
 -- | Move the pen forwards and sideways by the supplied amounts.
@@ -230,7 +234,7 @@ popsector c = case length (sectors c) of
 thing :: Context -> Context
 thing c = let newthing = Thing (location c) angle (curThingType c) 7 -- all skills
               angle = orientationToAngle (orientation c)
-          in c { things = newthing : things c }
+          in c { things = newthing : things c, seed = seed c + 1 }
 
 -- | Set the mid-texture value for future lines.
 mid :: String -> Context -> Context
@@ -351,7 +355,7 @@ addLine l c = let
     newlines   = if length intersects > 0
                  then workbest [l] intersects
                  else [l]
-    in c { sectors = news, linedefs = linedefs c ++ newlines }
+    in c { sectors = news, linedefs = linedefs c ++ newlines, seed = seed c + 1 }
 
 -- XXX rename!
 --          lines     cuts      lines
@@ -383,3 +387,33 @@ player4start      = setthing 4
 teleportdest      = setthing 14
 candle            = setthing 34
 soulsphere        = setthing 2013
+
+-- | set the pseudo-RNG seed to the supplied number.
+setseed :: Int -> Context -> Context
+setseed i c = c { seed = i }
+
+-- a pool of shuffled Ints, values 0-255
+-- pool = System.Random.Shuffle.shuffleM ([0..255] :: [Int])
+pool :: [Int]
+pool = [185, 253, 44, 94, 157, 115, 143, 196, 16, 208, 146, 53, 81, 45,
+    224, 92, 141, 176, 0, 51, 161, 83, 216, 237, 86, 156, 96, 243, 254, 192,
+    153, 31, 60, 134, 218, 177, 242, 147, 206, 36, 113, 107, 59, 111, 80, 190,
+    245, 124, 142, 171, 5, 189, 75, 85, 211, 163, 37, 165, 119, 175, 56, 123,
+    210, 118, 12, 122, 90, 207, 127, 30, 57, 155, 73, 120, 172, 125, 38, 200,
+    89, 40, 78, 68, 198, 221, 234, 230, 47, 193, 204, 50, 194, 246, 233, 209,
+    248, 43, 250, 169, 227, 187, 84, 24, 251, 222, 199, 137, 167, 6, 116, 173,
+    131, 22, 34, 13, 17, 226, 64, 203, 72, 126, 74, 99, 150, 27, 148, 63, 133,
+    58, 100, 158, 255, 11, 184, 106, 66, 117, 4, 247, 239, 2, 98, 109, 235,
+    101, 105, 205, 19, 93, 108, 95, 195, 9, 139, 128, 102, 67, 186, 183, 149,
+    140, 112, 18, 91, 79, 215, 252, 46, 130, 170, 10, 217, 240, 82, 136, 88,
+    15, 191, 7, 166, 159, 97, 214, 77, 28, 174, 135, 249, 212, 69, 35, 110, 52,
+    65, 32, 39, 231, 244, 1, 138, 225, 164, 33, 103, 114, 228, 241, 179, 48,
+    220, 178, 201, 229, 55, 70, 154, 20, 182, 87, 8, 223, 129, 25, 42, 41, 121,
+    160, 197, 76, 26, 188, 213, 168, 29, 236, 219, 71, 152, 104, 151, 14, 54,
+    180, 202, 132, 181, 238, 162, 61, 232, 144, 3, 145, 62, 49, 23, 21]
+
+-- | pick a random number from a pool. Use the Context's current
+-- seed value as an index. The seed value is not changed, so successive
+-- calls will return the same number.
+rand :: Context -> Int
+rand c = pool !! (seed c `mod` length pool)
